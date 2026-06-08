@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema DS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../Estudos-TI/HTML-CSS_original/ex004/logobr.ico" type="image/x-icon">
+</head>
+<body>
+    <header> <h1>Sistema de diferença salarial</h1> </header>
+
+    <section> <h2> Dados de remuneração </h2>
+    Mês de início: <input type="month" name="txt1" id="dataInicio"> <br>
+    Mês de encerramento: <input type="month" name="txt1" id="dataFim"> <br>
+    Valor inicial: <input type="number" name="txt1" id="valorInicial"> <br>
+    Valor base: <input type="number" name="txt1" id="valorBase">
+    <input type="button" value="Verificar" onclick="gerarMeses()"> 
+    <div id="reajustes"></div>
+    <button onclick="adicionarReajuste()"> Adicionar reajuste</button>
+    </section>
+
+    <div id="relatorio">
+        <h2>Relatório de Diferença Salarial</h2>
+        <p id="periodoRelatorio"></p>
+        <table>
+            <thead>
+                <tr>
+                    <th> Competência</th>
+                    <th>Salário base</th>
+                    <th>Salário pago</th>
+                    <th>Diferença décimo terceiro</th>
+                    <th>Diferença salarial</th>
+                    <th>Total da competência</th>
+                </tr>
+            </thead>
+            <tbody id="resultado">
+        
+            </tbody>
+        
+        </table>
+    </div>
+
+     <button id="savePdf" onclick="window.print()"> Imprimir/ Salvar PDF</button>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
