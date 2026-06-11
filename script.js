@@ -1,3 +1,10 @@
+function moeda(valor) {
+    return valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    })
+}
+
 function gerarMeses() {
     var DataInicio = document.getElementById("dataInicio").value
     var DataFim = document.getElementById("dataFim").value 
@@ -6,6 +13,21 @@ function gerarMeses() {
     var res = document.getElementById("resultado")
     
     res.innerHTML = ""
+
+    if(!DataInicio || !DataFim) {
+        alert("Preencha as datas de início e término de contrato") 
+        return
+    }
+
+    if(DataFim < DataInicio){
+        alert("A data final deve ser posterior à inicial")
+        return 
+    }
+
+    if(ValorBase<=0 || ValorInicial <=0) {
+        alert("Os salários devem ser maiores que zero")
+        return 
+    }
 
     let reajustes= obterReajustes()
 
@@ -64,11 +86,11 @@ function gerarMeses() {
         res.innerHTML += `
         <tr>
             <td> ${mes}/${ano}</td>
-            <td> R$ ${baseAtual.toFixed(2)}</td>
-            <td> R$ ${pagoAtual.toFixed(2)}</td>
-            <td> R$ ${decimo.toFixed(2)}</td>
-            <td> R$ ${diferenca.toFixed(2)}</td>
-            <td> R$ ${(decimo + diferenca).toFixed(2)}
+            <td> ${moeda(baseAtual)}</td>
+            <td> ${moeda(pagoAtual)}</td>
+            <td> ${moeda(decimo)}</td>
+            <td> ${moeda(diferenca)}</td>
+            <td> ${moeda(decimo + diferenca)}</td>
             </tr>
             `
 
@@ -85,9 +107,9 @@ function gerarMeses() {
     <td><strong>TOTAL</strong></td>
     <td>-</td>
     <td>-</td>
-    <td><strong>R$ ${totalDecimo.toFixed(2)}</strong></td>
-    <td><strong>R$ ${totalDiferenca.toFixed(2)}</strong></td>
-    <td><strong>R$ ${(totalDecimo+totalDiferenca).toFixed(2)}</strong></td>
+    <td><strong> ${moeda(totalDecimo)}</strong></td>
+    <td><strong> ${moeda(totalDiferenca)}</strong></td>
+    <td><strong> ${(moeda(totalDecimo + totalDiferenca))}</strong></td>
 </tr>
 `
 
@@ -113,7 +135,13 @@ function adicionarReajuste() {
     
     Salário pago: 
     <input type= "number" class= "salarioPago">
+
+     <button onclick="removerReajuste(this)"> Excluir </button>
     </div>`
+
+}
+
+function removerReajuste(botao) { botao.parentElement.remove()
 
 }
 
@@ -135,3 +163,43 @@ function obterReajustes() {
     return reajustes
 }
 
+function salvarDados() {
+    let dados = {
+        dataInicio: document.getElementById("dataInicio").value,
+        dataFim: document.getElementById("dataFim").value,
+        valorInicial: document.getElementById("valorInicial").value,
+        valorBase: document.getElementById("valorBase").value,
+        reajustes: obterReajustes()
+    }
+
+    localStorage.setItem(
+        "dadosSistema", 
+        JSON.stringify(dados)
+    )
+
+   alert("Dados salvos com sucesso!")
+
+}
+
+function carregarDados() {
+
+    let dadosSalvos = localStorage.getItem("dadosSistema")
+
+    if(!dadosSalvos) {
+        return
+    }
+
+    let dados = JSON.parse(dadosSalvos)
+
+    document.getElementById("dataInicio").value = dados.dataInicio
+
+    document.getElementById("dataFim").value = dados.dataFim
+
+    document.getElementById("valorInicial").value = dados.valorInicial
+
+    document.getElementById("valorBase").value = dados.valorBase
+
+    
+}
+
+window.onload = carregarDados
