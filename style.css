@@ -12,7 +12,7 @@
 
 body {
     background-color: var(--fundo-principal);
-    color: var(--texto-principal);
+    color: var(--texto-secundario);
     text-align: center;
     padding: 30px;
 

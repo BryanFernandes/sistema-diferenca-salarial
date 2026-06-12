@@ -11,11 +11,16 @@
     <header> <h1>Sistema de diferença salarial</h1> </header>
 
     <section> <h2> Dados de remuneração </h2>
+    Nome do funcionário: <input type="text" id="nomeCliente">
     Mês de início: <input type="month" name="txt1" id="dataInicio"> <br>
     Mês de encerramento: <input type="month" name="txt1" id="dataFim"> <br>
     Valor inicial: <input type="number" name="txt1" id="valorInicial"> <br>
     Valor base: <input type="number" name="txt1" id="valorBase">
-    <button onclick="adicionarReajuste()"> Adicionar reajuste</button>
+    
+    <button onclick="adicionarReajuste()"> Adicionar reajuste </button>
+    <button onclick="limparDados()">
+    Limpar Dados
+    </button>
      <input type="button" value="Verificar" onclick="gerarMeses()"> 
     <div id="reajustes"></div>
     </section>
@@ -44,6 +49,12 @@
      <button id="savePdf" onclick="window.print()"> Imprimir/ Salvar PDF</button>
 
      <button onclick="salvarDados()"> Salvar dados</button>
+
+     <button onclick="mostrarHistorico()"> Histórico de relatórios</button>
+
+     <div id="historico"></div>
+
+     <button onclick="salvarRelatorio()">Salvar relatório</button>
     
 
     <script src="script.js"></script>

@@ -6,6 +6,7 @@ function moeda(valor) {
 }
 
 function gerarMeses() {
+    var nome = document.getElementById("nomeCliente").value
     var DataInicio = document.getElementById("dataInicio").value
     var DataFim = document.getElementById("dataFim").value 
     let ValorBase = Number(document.getElementById("valorBase").value)
@@ -32,9 +33,6 @@ function gerarMeses() {
     let reajustes= obterReajustes()
 
     reajustes.sort((a,b) => a.data.localeCompare(b.data))
-
-
-
 
     let partesInicio = DataInicio.split("-")
     let partesFim = DataFim.split("-")
@@ -113,7 +111,9 @@ function gerarMeses() {
 </tr>
 `
 
-document.getElementById("periodoRelatorio").innerText = `Período: ${DataInicio} até ${DataFim}`
+document.getElementById("periodoRelatorio").innerText = ` Funcionário: ${nome}
+
+Período: ${DataInicio} até ${DataFim}`
     
 }
 
@@ -165,6 +165,7 @@ function obterReajustes() {
 
 function salvarDados() {
     let dados = {
+        nome: document.getElementById("nomeCliente").value,
         dataInicio: document.getElementById("dataInicio").value,
         dataFim: document.getElementById("dataFim").value,
         valorInicial: document.getElementById("valorInicial").value,
@@ -191,6 +192,8 @@ function carregarDados() {
 
     let dados = JSON.parse(dadosSalvos)
 
+    document.getElementById("nomeCliente").value = dados.nome
+
     document.getElementById("dataInicio").value = dados.dataInicio
 
     document.getElementById("dataFim").value = dados.dataFim
@@ -199,7 +202,156 @@ function carregarDados() {
 
     document.getElementById("valorBase").value = dados.valorBase
 
-    
+    for(let i = 0; i< dados.reajustes.length; i++) {
+        adicionarReajuste()
+
+        let datas = document.querySelectorAll(".dataReajuste")
+        let bases = document.querySelectorAll(".salarioBase")
+        let pagos = document.querySelectorAll(".salarioPago")
+
+        datas[i].value = dados.reajustes[i].data
+        bases[i].value = dados.reajustes[i].base
+        pagos[i].value = dados.reajustes[i].pago
+    }
+
 }
 
 window.onload = carregarDados
+
+function limparDados() {
+
+    if(confirm("Deseja realmente apagar os dados pré salvos?")) {
+    localStorage.removeItem("dadosSistema")
+
+    location.reload()
+}
+
+}
+
+function salvarRelatorio() {
+    let historico = JSON.parse(
+        localStorage.getItem("historicoRelatorios")
+    ) || []
+
+    let agora = new Date()
+
+    let dataGeracao = 
+    agora.toLocaleString("pt-BR")
+
+    let relatorio = {
+        id: Date.now(),
+
+        cliente: document.getElementById("nomeCliente").value,
+
+        dataGeracao: dataGeracao,
+
+        dadosFormulario: {
+            dataInicio: document.getElementById("dataInicio").value,
+
+            dataFim: 
+            document.getElementById("dataFim").value,
+
+            valorInicial: 
+            document.getElementById("valorInicial").value,
+
+            valorBase: 
+            document.getElementById("valorBase").value,
+
+            reajustes:
+            obterReajustes(),
+
+            tabelaGerada:
+            document.getElementById("resultado").innerHTML,
+
+            periodoRelatorio: 
+            document.getElementById("periodoRelatorio").innerText
+
+        }
+
+    }
+
+     historico.push(relatorio)
+
+     localStorage.setItem(
+        "historicoRelatorios",JSON.stringify(historico)
+     )
+
+     alert("Relatorio salvo no histórico")
+
+}
+
+function mostrarHistorico () {
+
+    let historico = JSON.parse(
+        localStorage.getItem("historicoRelatorios")
+    ) || []
+
+    let divHistorico = document.getElementById("historico")
+
+    divHistorico.innerHTML = ""
+
+    if(historico.length === 0) {
+        divHistorico.innerHTML = "<p> Nenhum relatório salvo. </p>"
+        return
+    }
+
+    for(let i= 0; i < historico.length; i++) {
+
+        divHistorico.innerHTML += `
+        <div class= "itemHistorico">
+        
+        <h3> ${historico[i].cliente} </h3>
+        
+        <p>
+             ${historico[i].dataGeracao}
+        </p>
+
+        <button onclick="carregarRelatorio(${i})"> Carregar </button>
+        
+        </div>
+        `
+
+    }
+
+}
+
+function carregarRelatorio(indice) {
+    let historico = JSON.parse(localStorage.getItem("historicoRelatorios")) || []
+
+    let relatorio = historico[indice]
+
+    document.getElementById("nomeCliente").value = relatorio.cliente
+
+    document.getElementById("dataInicio").value = relatorio.dadosFormulario.dataInicio
+
+    document.getElementById("dataFim").value = relatorio.dadosFormulario.dataFim
+
+    document.getElementById("valorInicial").value = relatorio.dadosFormulario.valorInicial
+
+    document.getElementById("valorBase").value = relatorio.dadosFormulario.valorBase
+
+    document.getElementById("reajustes").innerHTML = ""
+
+    contador = 0
+
+    for(
+        let i= 0; i < relatorio.dadosFormulario.reajustes.length; i++
+    ) {
+        adicionarReajuste()
+
+        let datas = document.querySelectorAll(".dataReajuste")
+
+        let bases = document.querySelectorAll(".salarioBase")
+
+        let pagos = document.querySelectorAll(".salarioPago")
+
+        datas[i].value = relatorio.dadosFormulario.reajustes[i].data
+
+        bases[i].value = relatorio.dadosFormulario.reajustes[i].base
+        pagos[i].value = relatorio.dadosFormulario.reajustes[i].pago
+    }
+
+    document.getElementById("resultado").innerHTML = relatorio.dadosFormulario.tabelaGerada
+
+    document.getElementById("periodoRelatorio").innerText = relatorio.dadosFormulario.periodoRelatorio
+}
