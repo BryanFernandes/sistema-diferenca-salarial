@@ -275,6 +275,7 @@ function salvarRelatorio() {
             periodoRelatorio: 
             document.getElementById("periodoRelatorio").innerText
 
+
         }
 
     }
@@ -286,6 +287,8 @@ function salvarRelatorio() {
      )
 
      alert("Relatorio salvo no histórico")
+
+    
 
 }
 
@@ -365,6 +368,10 @@ function carregarRelatorio(indice) {
     document.getElementById("resultado").innerHTML = relatorio.dadosFormulario.tabelaGerada
 
     document.getElementById("periodoRelatorio").innerText = relatorio.dadosFormulario.periodoRelatorio
+
+    document.getElementById("")
+
+     gerarMeses()
 }
 
 function excluirRelatorio(indice) {

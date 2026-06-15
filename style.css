@@ -23,7 +23,7 @@ body {
 }
 
 .topo{
-    background-color: #4f46e5;
+    background-color: var(--botoes);
     padding: 25px;
     border-radius: 12px;
     margin-bottom: 25px;
@@ -46,9 +46,9 @@ h2{
 }
 
 section{
-    background-color: var(--fundo-secundario);
+    background-color: var(--fundo-card);
     color: var(--texto-secundario);
-    width: 300px;
+    max-width: 900px;
     height: auto;
     margin: 0 auto;
     box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.397);
@@ -57,6 +57,10 @@ section{
     border-radius: 8px;
     text-align: left;
     
+}
+
+.tabela-container{
+    overflow-x: auto;
 }
 
 input{
@@ -130,7 +134,7 @@ h2{
     color: black;
     padding: 20px;
     border-radius: 10px;
-    min-width: 200px;
+    max-width: 300px;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
     text-align: center;
 }
