@@ -6,9 +6,18 @@
     <title>Sistema DS</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="../Estudos-TI/HTML-CSS_original/ex004/logobr.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/491788c068.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
-    <header> <h1>Sistema de diferença salarial</h1> </header>
+    <header class="topo">
+         <div>
+             <h1>Sistema DS</h1>
+             <p>Controle e cálculo de diferenças salariais</p> 
+         </div>
+    </header>
+
+    <h2> <i class="fa-solid fa-address-card"></i> Dados do Funcionário</h2>
 
     <section> <h2> Dados de remuneração </h2>
     Nome do funcionário: <input type="text" id="nomeCliente">
@@ -25,6 +34,33 @@
     <div id="reajustes"></div>
     </section>
 
+    <h2>Resumo Financeiro</h2>
+
+    <div id="dashboard">
+        <div class="card">
+            <h3>Diferença salarial</h3>
+            <p id="cardDiferenca">R$ 0,00</p>
+        </div>
+
+        <div class="card">
+            <h3>Décimo terceiro</h3>
+            <p id="cardDecimo">
+                R$ 0,00
+            </p>
+        </div>
+
+        <div class= "card">
+            <h3>Total geral</h3> 
+            <p id="cardTotal"> R$ 0,00</p>
+        </div>
+
+        <div class="card">
+            <h3>Meses calculados</h3>
+            <p id="cardMeses">0</p>
+        </div>
+    </div>
+
+    <h2>Relatório Gerado</h2>
     <div id="relatorio">
         <h2>Relatório de Diferença Salarial</h2>
         <p id="periodoRelatorio"></p>
@@ -49,6 +85,8 @@
      <button id="savePdf" onclick="window.print()"> Imprimir/ Salvar PDF</button>
 
      <button onclick="salvarDados()"> Salvar dados</button>
+
+     <h2>Histórico de relatórios</h2>
 
      <button onclick="mostrarHistorico()"> Histórico de relatórios</button>
 

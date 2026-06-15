@@ -46,11 +46,12 @@ function gerarMeses() {
     let mesesNoAno = 0
     let totalDiferenca = 0
     let totalDecimo = 0
+    let totalMeses = 0
 
     while(ano < anoFim || (ano === anoFim && mes <= mesFim)) {
 
-        
-        
+        totalMeses++
+
         let dataAtual = `${ano}-${String(mes).padStart(2,"0")}`
 
         let baseAtual = ValorBase
@@ -114,6 +115,14 @@ function gerarMeses() {
 document.getElementById("periodoRelatorio").innerText = ` Funcionário: ${nome}
 
 Período: ${DataInicio} até ${DataFim}`
+
+document.getElementById("cardDiferenca").innerText = moeda(totalDiferenca)
+
+document.getElementById("cardDecimo").innerText = moeda(totalDecimo)
+
+document.getElementById("cardTotal").innerText = moeda(totalDiferenca + totalDecimo)
+
+document.getElementById("cardMeses").innerText = totalMeses
     
 }
 
@@ -307,6 +316,8 @@ function mostrarHistorico () {
         </p>
 
         <button onclick="carregarRelatorio(${i})"> Carregar </button>
+
+        <button onclick= "excluirRelatorio(${i})"> Excluir </button>
         
         </div>
         `
@@ -354,4 +365,21 @@ function carregarRelatorio(indice) {
     document.getElementById("resultado").innerHTML = relatorio.dadosFormulario.tabelaGerada
 
     document.getElementById("periodoRelatorio").innerText = relatorio.dadosFormulario.periodoRelatorio
+}
+
+function excluirRelatorio(indice) {
+    if(!confirm(
+        "Deseja realmente excluir este relatório?"
+    )) {
+        return
+    }
+
+    let historico = JSON.parse(localStorage.getItem("historicoRelatorios")) || []
+
+    historico.splice(indice,1)
+
+    localStorage.setItem("historicoRelatorios", JSON.stringify(historico))
+
+    mostrarHistorico()
+
 }
