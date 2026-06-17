@@ -5,6 +5,7 @@ function moeda(valor) {
     })
 }
 
+
 function gerarMeses() {
     var nome = document.getElementById("nomeCliente").value
     var DataInicio = document.getElementById("dataInicio").value
