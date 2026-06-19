@@ -1,0 +1,28 @@
+{
+  "name": "sistema-diferenca-salarial",
+  "version": "1.0.0",
+  "description": "Sistema web desenvolvido para automatizar o cálculo de diferenças salariais decorrentes de reajustes sindicais (dissídios), reduzindo erros manuais e agilizando a geração de relatórios.",
+  "main": "script.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BryanFernandes/sistema-diferenca-salarial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BryanFernandes/sistema-diferenca-salarial/issues"
+  },
+  "homepage": "https://github.com/BryanFernandes/sistema-diferenca-salarial#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

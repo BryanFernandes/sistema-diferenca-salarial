@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de banco de dados</title>
+</head>
+<body>
+    <button onclick="enviar()"> Enviar </button>
+
+    <script> async function enviar() {
+        const resposta = await fetch( "http://localhost:3000/teste", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            }, 
+
+            body: JSON.stringify({
+                nome: "Bryan", 
+                idade: 25
+            })
+
+        }
+
+        )
+
+            const texto = await resposta.text()
+
+            alert(texto)
+        } 
+            
+            </script>
+    
+</body>
+</html>
