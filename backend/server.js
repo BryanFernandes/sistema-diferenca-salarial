@@ -4,6 +4,8 @@ const cors = require("cors")
 
 const app = express()
 
+const db = require("./database")
+
 app.use(cors())
 
 app.use(express.json())
@@ -19,7 +21,18 @@ app.post("/teste", (req, res) => {
 })
 
 app.get("/usuarios", (req,res) => {
-    res.send("Lista de usuários")
+    db.all(
+        "SELECT * FROM usuarios",
+        [],
+        (err,rows) => {
+
+            if(err) {
+                return res.status(500).send("Erro ao buscar usuários")
+            }
+
+            res.json(rows)
+        }
+    )
 })
 
 app.get("/relatorios", (req,res) => {
@@ -32,4 +45,21 @@ app.get("/login", (req,res) => {
 
 app.listen(3000, () => {
     console.log("Servidor rodando")
+})
+
+app.post("/cadastro", (req,res) => {
+    const {nome, email, senha} = req.body
+    db.run(
+        `INSERT INTO usuarios (nome, email, senha)
+        VALUES (?,?,?)
+        `,
+        [nome, email, senha],
+        function(err) {
+            if (err) {
+                return res.status(500).send("Erro ao cadastrar")
+            }
+
+            res.send("Usuário cadastrado com sucesso")
+        }
+    )
 })
