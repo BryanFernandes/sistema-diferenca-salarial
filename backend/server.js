@@ -63,3 +63,27 @@ app.post("/cadastro", (req,res) => {
         }
     )
 })
+
+app.post("/login", (req,res) => {
+    const {email, senha} = req.body 
+    db.get(
+        `
+        SELECT * 
+        FROM usuarios
+        WHERE email = ?
+        AND senha = ?
+        `, [email,senha],
+        (err,row) => {
+            if(err) {
+                return res.status(500).send("Erro no login")
+            }
+            if(row) {
+                res.send("Login realizado com sucesso")
+            } else {
+                res.send("Email ou senha inválidos")
+            }
+        }
+    )  
+
+})
+
