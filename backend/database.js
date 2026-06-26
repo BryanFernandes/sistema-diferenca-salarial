@@ -12,6 +12,20 @@ db.serialize(() => {
         senha TEXT
         )
     `)
+
+    db.run(`CREATE TABLE IF NOT EXISTS relatorios (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        usuario_id INTEGER,
+        funcionario TEXT,
+        data_inicio TEXT,
+        data_fim TEXT,
+        
+        FOREIGN KEY (usuario_id)
+        REFERENCES usuarios(id)
+        )
+        
+    `)
+
 })
 
 module.exports = db

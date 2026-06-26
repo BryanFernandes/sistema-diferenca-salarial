@@ -37,9 +37,15 @@
                 }
             )
 
-            const texto = await resposta.text()
+            const dados = await resposta.json()
 
-            alert(texto)
+            console.log(dados)
+
+            alert(dados.mensagem)
+
+            if(dados.token) {
+                localStorage.setItem("token", dados.token)
+            }
         }
     </script>
     

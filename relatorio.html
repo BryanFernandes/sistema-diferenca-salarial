@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Relatório</title>
+</head>
+<body>
+    <input id="funcionario" placeholder="Funcionário">
+    <br><br>
+
+    <input type="month" id="inicio">
+    <br><br>
+
+    <input type="month" id="fim">
+    <br><br>
+
+    <button onclick="
+    salvar()"> Salvar relatório
+    </button>
+
+    <script>
+        async function salvar() {
+
+            console.log(localStorage.getItem("token"))
+            
+            const resposta = await fetch(
+                "http://localhost:3000/relatorios",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": localStorage.getItem("token")
+                    },
+
+                    body: JSON.stringify({
+                        usuario_id: 1,
+                        funcionario: 
+                        document.getElementById("funcionario").value,
+
+                        data_inicio: 
+                        document.getElementById("inicio").value,
+
+                        data_fim: 
+                        document.getElementById("fim").value
+                    })
+                }
+            )
+
+            const texto = await resposta.text()
+
+            alert(texto)
+        }
+    </script>
+    
+</body>
+</html>
